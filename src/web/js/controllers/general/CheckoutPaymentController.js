@@ -1,7 +1,8 @@
 angular.module('cp.controllers.general').controller('CheckoutPaymentController',
         function($scope, DocumentTitleService, SecurityService, LoadingService, PackagesFactory,
         CheckoutService, $location, UsersFactory, $q, NotificationService, OrdersFactory,
-        getCardNumberMaskFilter, PromoCodeFactory, getPromoCodeErrorTextFilter) {
+        getCardNumberMaskFilter, PromoCodeFactory, getPromoCodeErrorTextFilter,
+        GoogleAnalyticsService) {
     DocumentTitleService('Checkout: Payment');
     SecurityService.requireLoggedIn();
 
@@ -165,7 +166,7 @@ angular.module('cp.controllers.general').controller('CheckoutPaymentController',
 
         LoadingService.show();
 
-        let orderDetails = {
+        const orderDetails = {
             deliveryAddress: CheckoutService.getDeliveryAddressId(),
             headCount: CheckoutService.getHeadCount(),
             package: CheckoutService.getPackageId(),
@@ -183,7 +184,7 @@ angular.module('cp.controllers.general').controller('CheckoutPaymentController',
             willVendorSetUpAfterDelivery: CheckoutService.isVendorRequiredToSetUp()
         };
 
-        let promises = [];
+        const promises = [];
 
         if ($scope.order.isPayOnAccount) {
             orderDetails.payOnAccount = true;
@@ -208,6 +209,8 @@ angular.module('cp.controllers.general').controller('CheckoutPaymentController',
                     CheckoutService.setEndTime(new Date());
                     CheckoutService.reset();
                     CheckoutService.setLastCreatedOrder(response.updatedObject);
+
+                    GoogleAnalyticsService.trackNewOrder(response.updatedObject);
 
                     $location.path('/checkout/thank-you');
                 })

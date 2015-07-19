@@ -2,7 +2,7 @@ angular.module('cp.controllers.general').controller('ViewPackageController',
         function($scope, $routeParams, PackagesFactory, NotificationService, DocumentTitleService,
         LoadingService, SecurityService, $sce, FRONTEND_BASE, OrdersFactory, $location,
         getPackageAvailabilityErrorTextFilter, CheckoutService, $filter, SearchService,
-        ABTestService, dateIsBSTInEffectFilter, $window) {
+        ABTestService, dateIsBSTInEffectFilter, $window, GoogleAnalyticsService) {
     $scope.openLoginModal = false;
     $scope.isLoggedIn = SecurityService.isLoggedIn();
 
@@ -100,6 +100,8 @@ angular.module('cp.controllers.general').controller('ViewPackageController',
             SearchService.setLastPackageSelected($scope.package.id);
 
             recalculateCostAmounts();
+
+            GoogleAnalyticsService.trackPackageView($scope.package);
         })
         .catch(response => NotificationService.notifyError(response.data.errorTranslation));
 
