@@ -36,7 +36,7 @@ angular.module('cp.services').service('GoogleAnalyticsService', function(INCLUDE
                 name: pkg.name,
                 category: pkg.cuisineType.name,
                 brand: pkg.vendor.name,
-                price: pkg.costIncludingVat,
+                price: pkg.totalGrossFoodCost,
                 coupon: promoCode,
                 quantity: order.headCount
             });

@@ -42,9 +42,8 @@ describe('ViewPackageController', function() {
             200,
             {
                 id: 'abc123',
-                recycled: false,
-                approved: true,
-                active: true,
+                isDeleted: false,
+                isApproved: true,
                 dietaryRequirements: 'cheese',
                 vendor: {
                     name: 'Bob',

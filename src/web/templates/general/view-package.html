@@ -57,7 +57,7 @@
             <h1 class="cp-package-name">{{ package.name }}</h1>
 
             <span class="cp-package-cost">
-                <em ng-bind="package.costIncludingVat | currency:'£':2"></em>
+                <em ng-bind="package.totalGrossFoodCost | currency:'£':2"></em>
                 <span>per head</span>
             </span>
 

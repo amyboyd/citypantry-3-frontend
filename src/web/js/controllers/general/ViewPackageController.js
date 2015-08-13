@@ -51,7 +51,7 @@ angular.module('cp.controllers.general').controller('ViewPackageController',
             $scope.order.headCount = $scope.package.minPeople;
         }
 
-        $scope.order.subTotalAmount = $scope.package.costIncludingVat * $scope.order.headCount;
+        $scope.order.subTotalAmount = $scope.package.totalGrossFoodCost * $scope.order.headCount;
 
         if ($scope.order.subTotalAmount >= $scope.package.freeDeliveryThreshold) {
             $scope.order.deliveryCost = 0;
@@ -66,7 +66,7 @@ angular.module('cp.controllers.general').controller('ViewPackageController',
         .success(response => {
             $scope.package = response;
 
-            if ($scope.package.recycled || !$scope.package.approved || !$scope.package.active) {
+            if ($scope.package.isDeleted || !$scope.package.isApproved) {
                 $location.url('/package/deleted').replace();
                 return;
             }

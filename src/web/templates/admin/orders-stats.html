@@ -13,32 +13,32 @@
     <div ng-if="isReady">
         <h3 class="cp-heading">August</h3>
 
-        <p><b>Month total: {{ getTotalInMonth(august) }}</b></p>
+        <p><b>Month total: {{ getTotalInMonth(august) | currency:'' }}</b></p>
 
-        <p ng-repeat="day in august">{{ day.start | date:'d' }}: {{ day.sales }}</p>
+        <p ng-repeat="day in august">{{ day.start | date:'d' }}: {{ day.sales | currency:'' }}</p>
 
         <h3 class="cp-heading">July</h3>
 
-        <p><b>Month total: {{ getTotalInMonth(july) }}</b></p>
+        <p><b>Month total: {{ getTotalInMonth(july) | currency:'' }}</b></p>
 
-        <p ng-repeat="day in july">{{ day.start | date:'d' }}: {{ day.sales }}</p>
+        <p ng-repeat="day in july">{{ day.start | date:'d' }}: {{ day.sales | currency:'' }}</p>
 
         <h3 class="cp-heading">June</h3>
 
-        <p><b>Month total: {{ getTotalInMonth(june) }}</b></p>
+        <p><b>Month total: {{ getTotalInMonth(june) | currency:'' }}</b></p>
 
-        <p ng-repeat="day in june">{{ day.start | date:'d' }}: {{ day.sales }}</p>
+        <p ng-repeat="day in june">{{ day.start | date:'d' }}: {{ day.sales | currency:'' }}</p>
 
         <h3 class="cp-heading">May</h3>
 
-        <p><b>Month total: {{ getTotalInMonth(may) }}</b></p>
+        <p><b>Month total: {{ getTotalInMonth(may) | currency:'' }}</b></p>
 
-        <p ng-repeat="day in may">{{ day.start | date:'d' }}: {{ day.sales }}</p>
+        <p ng-repeat="day in may">{{ day.start | date:'d' }}: {{ day.sales | currency:'' }}</p>
 
         <h3 class="cp-heading">April</h3>
 
-        <p><b>Month total: {{ getTotalInMonth(april) }}</b></p>
+        <p><b>Month total: {{ getTotalInMonth(april) | currency:'' }}</b></p>
 
-        <p ng-repeat="day in april">{{ day.start | date:'d' }}: {{ day.sales }}</p>
+        <p ng-repeat="day in april">{{ day.start | date:'d' }}: {{ day.sales | currency:'' }}</p>
     </div>
 </div>

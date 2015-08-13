@@ -30,8 +30,8 @@
                         This package is only visible to {{ package.onlyForCustomer.company }}
                     </span>
                 </td>
-                <td>{{ package.costIncludingVat | currency:'£' }}</td>
-                <td>{{ package.activeAndApproved }}</td>
+                <td>{{ package.totalGrossFoodCost | currency:'£' }}</td>
+                <td>{{ package.status }}</td>
                 <td class="dropdown">
                     <a href="/vendor/packages/{{ package.id }}" class="btn btn-primary edit-package">
                         Edit</a></li>

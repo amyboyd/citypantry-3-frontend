@@ -25,7 +25,7 @@ angular.module('cp.controllers.admin').controller('AdminVendorsController',
             },
             {
                 displayName: 'Status',
-                field: 'activeAndApproved'
+                field: 'status'
             },
             {
                 cellTemplate: `<div class="ui-grid-cell-contents">
@@ -50,7 +50,8 @@ angular.module('cp.controllers.admin').controller('AdminVendorsController',
     function loadVendors() {
         VendorsFactory.getAllVendors().success(response => {
             angular.forEach(response.vendors, row => {
-                row.activeAndApproved = getActiveAndApprovedStatusTextFilter(row.isActive, row.isApproved);
+                // There is no `isActive` field for vendors, so pass `true`.
+                row.status = getActiveAndApprovedStatusTextFilter(true, row.isApproved);
             });
             vm.gridOptions.data = response.vendors;
 

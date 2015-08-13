@@ -8,8 +8,8 @@ angular.module('cp.controllers.admin').controller('AdminEditPackageController',
         PackagesFactory.getPackage($routeParams.packageId)
             .success(vendorPackage => {
                 $scope.vendorPackage = vendorPackage;
-                $scope.isVisibleToCustomers = vendorPackage.active && vendorPackage.approved && !vendorPackage.recycled;
-                $scope.isOnlyNeedingApproval = vendorPackage.active && !vendorPackage.recycled && !vendorPackage.approved;
+                $scope.isVisibleToCustomers = vendorPackage.isApproved && !vendorPackage.isDeleted;
+                $scope.isOnlyNeedingApproval = !vendorPackage.isApproved && !vendorPackage.isDeleted;
                 LoadingService.hide();
             })
             .catch(response => NotificationService.notifyError(response.data.errorTranslation));

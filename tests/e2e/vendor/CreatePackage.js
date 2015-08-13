@@ -198,7 +198,10 @@ describe('Vendor portal - create package', function() {
         element.all(by.css('input[name="packageAllergenTypes[]"]')).get(0).click();
         element.all(by.css('input[name="packageEventTypes[]"]')).get(0).click();
         element.all(by.css('input[name="packageHotFood"]')).get(0).click();
-        element(by.model('package.costIncludingVat')).sendKeys(1.30);
+
+        element(by.model('package.standardRatedFoodGrossCost')).clear().sendKeys(1.30);
+        element(by.model('package.zeroRatedFoodNetCost')).clear().sendKeys(0);
+
         element(by.model('package.notice')).sendKeys(1);
         element.all(by.css('input[name="packageDeliveryDays[]"]')).get(0).click();
         element(by.model('package.deliveryCostIncludingVat')).sendKeys(15);

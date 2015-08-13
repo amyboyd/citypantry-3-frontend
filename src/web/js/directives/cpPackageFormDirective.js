@@ -33,6 +33,34 @@ angular.module('cp').controller('cpPackageFormController', function($scope, $loc
     $scope.packagingTypeOptions = PackagesFactory.getPackagingTypeOptions();
     $scope.vendor = {};
 
+    function round(number) {
+        return Number(number.toFixed(2));
+    }
+
+    function recalculateFoodCosts() {
+        $scope.package.standardRatedFoodNetCost = round(Number($scope.package.standardRatedFoodGrossCost) / 1.2);
+        $scope.package.standardRatedFoodVatCost = round(Number($scope.package.standardRatedFoodGrossCost) - $scope.package.standardRatedFoodNetCost);
+
+        $scope.package.totalFoodVatCost = $scope.package.standardRatedFoodVatCost;
+        $scope.package.totalFoodNetCost = round($scope.package.standardRatedFoodNetCost + Number($scope.package.zeroRatedFoodNetCost));
+        $scope.package.totalFoodGrossCost = round($scope.package.totalFoodNetCost + $scope.package.totalFoodVatCost);
+    }
+
+    function initializeFoodCosts() {
+        if ($scope.package.totalGrossFoodCost > 0 &&
+                $scope.package.zeroRatedFoodNetCost > 0 &&
+                !angular.isDefined($scope.package.standardRatedFoodGrossCost)) {
+            $scope.package.standardRatedFoodGrossCost = round($scope.package.totalGrossFoodCost - $scope.package.zeroRatedFoodNetCost);
+        }
+
+        recalculateFoodCosts();
+
+        $scope.$watch('package.standardRatedFoodGrossCost', recalculateFoodCosts);
+        $scope.$watch('package.zeroRatedFoodNetCost', recalculateFoodCosts);
+    }
+
+    initializeFoodCosts();
+
     const VALID_OPERATIONS = ['update', 'create'];
 
     if (VALID_OPERATIONS.indexOf($scope.operation) === -1) {
@@ -245,8 +273,8 @@ angular.module('cp').controller('cpPackageFormController', function($scope, $loc
             allergenTypes: defaultToEmptyArray($scope.package.allergenTypes),
             eventTypes: defaultToEmptyArray($scope.package.eventTypes),
             hotFood: $scope.package.hotFood,
-            costIncludingVat: Number($scope.package.costIncludingVat),
-            costOfVat: Number($scope.package.costOfVat),
+            standardRatedFoodNetCost: Number($scope.package.standardRatedFoodNetCost),
+            zeroRatedFoodNetCost: Number($scope.package.zeroRatedFoodNetCost),
             deliveryRadiuses: deliveryRadiuses,
             minPeople: $scope.package.minPeople,
             maxPeople: $scope.package.maxPeople,

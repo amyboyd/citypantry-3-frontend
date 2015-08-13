@@ -8,7 +8,7 @@ angular.module('cp.controllers.admin').controller('AdminEditDeliveryRadiiControl
         .success(response => {
             $scope.packages = response.packages;
             $scope.packages.sort((a, b) => a.name.localeCompare(b.name));
-            $scope.packages.forEach((p) => p.isFullyActive = p.active && p.approved && !p.recycled);
+            $scope.packages.forEach((p) => p.isFullyActive = p.isApproved && !p.isDeleted);
             LoadingService.hide();
         })
         .catch(response => NotificationService.notifyError(response.data.errorTranslation));

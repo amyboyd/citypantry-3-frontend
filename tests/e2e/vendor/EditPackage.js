@@ -76,7 +76,9 @@ describe('Vendor portal - edit a non-meal-plan package', function() {
         expect(element.all(by.css('input[name="packageEventTypes[]"]')).get(1).isSelected()).toBe(false);
 
         expect(element.all(by.css('input[name="packageHotFood"]')).get(1).isSelected()).toBe(true);
-        expect(element(by.model('package.costIncludingVat')).getAttribute('value')).toBe('20');
+
+        expect(element(by.model('package.standardRatedFoodGrossCost')).getAttribute('value')).toBe('0');
+        expect(element(by.model('package.zeroRatedFoodNetCost')).getAttribute('value')).toBe('20');
 
         // Delivery days: "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" and "Saturday".
         expect(element.all(by.css('input[name="packageDeliveryDays[]"]')).get(0).isSelected()).toBe(true);

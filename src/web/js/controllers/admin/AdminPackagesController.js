@@ -31,7 +31,7 @@ angular.module('cp.controllers.admin').controller('AdminPackagesController',
             {
                 cellFilter: 'currency:\'£\':2',
                 displayName: 'Cost (inc. VAT)',
-                field: 'costIncludingVat'
+                field: 'totalGrossFoodCost'
             },
             {
                 displayName: 'Min People',
@@ -43,7 +43,7 @@ angular.module('cp.controllers.admin').controller('AdminPackagesController',
             },
             {
                 displayName: 'Status',
-                field: 'activeAndApproved'
+                field: 'status'
             },
             {
                 cellTemplate: `<div class="ui-grid-cell-contents">
@@ -71,7 +71,10 @@ angular.module('cp.controllers.admin').controller('AdminPackagesController',
 
     function loadPackages() {
         PackagesFactory.getAllPackages().success(response => {
-            angular.forEach(response.packages, row => row.activeAndApproved = getActiveAndApprovedStatusTextFilter(row.active, row.approved));
+            angular.forEach(response.packages, row => {
+                // There is no `isActive` field for packages, so pass `true`.
+                row.status = getActiveAndApprovedStatusTextFilter(true, row.isApproved);
+            });
 
             vm.gridOptions.data = response.packages;
 

@@ -4,7 +4,7 @@
         <div class="cp-package-card-name" ng-bind="package.name" js-clamp="'2'"></div>
         <div class="cp-package-card-vendor">{{ package.vendor.name }}</div>
         <span class="cp-package-card-price">
-            <em ng-bind="package.costIncludingVat | currency:'£':2"></em>
+            <em ng-bind="package.totalGrossFoodCost | currency:'£':2"></em>
             <span>per head</span>
         </span>
         <span class="cp-package-card-notice" ng-if="package.notice">{{ package.notice > 48 ? (package.notice / 24) + 'D' : package.notice + 'H' }} <span>notice</span></span>
