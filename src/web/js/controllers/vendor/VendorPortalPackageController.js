@@ -13,7 +13,8 @@ angular.module('cp.controllers.vendor').controller('VendorPortalPackageControlle
     } else {
         $scope.package = {
             allergenTypes: [],
-            costOfVat: (0).toFixed(2),
+            standardRatedFoodNetCost: 0,
+            zeroRatedFoodNetCost: 0,
             deliveryDays: [],
             deliveryTimeEnd: 2000,
             deliveryTimeStart: 800,

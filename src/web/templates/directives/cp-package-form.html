@@ -113,28 +113,56 @@
         </div>
 
         <div class="cp-form-group">
-            <label class="cp-form-label" for="package_cost">
-                How much do you want to charge for this package per head?
-                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageCost.$error.required">(Package cost is required.)</span>
-                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageCost.$error.number">(Package cost must be a number.)</span>
+            <label class="cp-form-label">
+                How much do you want to charge for this package, per head?
+                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageStandardRatedFoodGrossCost.$error.required">(Standard-rated cost is required.)</span>
+                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageStandardRatedFoodGrossCost.$error.number">(Standard-rated cost must be a number.)</span>
+                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageZeroRatedFoodNetCost.$error.required">(Zero-rated cost is required.)</span>
+                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageZeroRatedFoodNetCost.$error.number">(Zero-rated cost must be a number.)</span>
             </label>
-            <div class="input-group">
-                <div class="input-group-addon">£</div>
-                <input class="cp-form-control" id="package_cost" name="packageCost" type="text" required aria-required="true" ng-model="package.costIncludingVat" currency-mask />
-            </div>
-        </div>
 
-        <div class="cp-form-group">
-            <label class="cp-form-label" for="package_cost_of_vat">
-                How much of the package cost is <abbr title="value added tax">VAT</abbr>?
-                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageCostOfVat.$error.required">(Please specify how much of the package cost is VAT.)</span>
-                <span class="form-element-invalid" ng-show="packageForm.$submitted && packageForm.packageCostOfVat.$error.number">(VAT amount must be a number.)</span>
-            </label>
-            <div class="input-group">
-                <div class="input-group-addon">£</div>
-                <input class="cp-form-control" id="package_cost_of_vat" name="packageCostOfVat" type="text" required aria-required="true" ng-model="package.costOfVat" currency-mask />
-            </div>
-            <span class="help-block">Leave as £0.00 if not VAT registered.</span>
+            <table class="cp-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Net</th>
+                        <th>VAT</th>
+                        <th>Gross</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hot</td>
+                        <td>{{ package.standardRatedFoodNetCost | currency:'£':2 }}</td>
+                        <td>{{ package.standardRatedFoodVatCost | currency:'£':2 }}</td>
+                        <td>
+                            <input class="cp-form-control"
+                                name="packageStandardRatedFoodGrossCost"
+                                type="number"
+                                required aria-required="true"
+                                ng-model="package.standardRatedFoodGrossCost" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Cold</td>
+                        <td>{{ package.zeroRatedFoodNetCost | currency:'£':2 }}</td>
+                        <td>{{ 0 | currency:'£':2 }}</td>
+                        <td>
+                            <input class="cp-form-control"
+                                name="packageZeroRatedFoodNetCost"
+                                type="number"
+                                required aria-required="true"
+                                ng-model="package.zeroRatedFoodNetCost" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>{{ package.totalFoodNetCost | currency:'£':2 }}</td>
+                        <td>{{ package.totalFoodVatCost | currency:'£':2 }}</td>
+                        <td>{{ package.totalFoodGrossCost | currency:'£':2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="cp-form-group">

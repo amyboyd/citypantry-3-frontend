@@ -10,7 +10,10 @@ angular.module('cp.controllers.vendor').controller('VendorPortalPackagesControll
     function loadPackages() {
         PackagesFactory.getPackagesByCurrentVendor()
             .success(response => {
-                angular.forEach(response.packages, row => row.activeAndApproved = getActiveAndApprovedStatusTextFilter(row.active, row.approved));
+                angular.forEach(response.packages, row => {
+                    // There is no `isActive` field for packages, so pass `true`.
+                    row.status = getActiveAndApprovedStatusTextFilter(true, row.isApproved);
+                });
                 response.packages.sort((a, b) => a.humanId >= b.humanId);
                 $scope.packages = response.packages;
                 $scope.count = $scope.packages.length;
