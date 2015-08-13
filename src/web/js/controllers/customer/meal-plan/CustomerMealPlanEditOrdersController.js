@@ -17,6 +17,8 @@ angular.module('cp.controllers.customer').controller('CustomerMealPlanEditOrders
         loadReviews($scope.selectedOrder.package);
     };
 
+    $scope.showReviewButton = (order) => !order.hasBeenReviewed && order.hasRequestedDeliveryDatePassed;
+
     MealPlanFactory.getCustomerMealPlan('me', $routeParams.mealPlanId)
         .success(response => {
             if (response.mealPlan.statusText === 'pending_customer_approval') {

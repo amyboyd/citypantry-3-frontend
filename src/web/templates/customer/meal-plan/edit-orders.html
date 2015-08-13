@@ -31,6 +31,11 @@
                         <span class="cp-meal-plan-review-order-package-name">{{ order.package.name }}</span>
                         <span class="cp-meal-plan-review-order-vendor-name">{{ order.package.vendor.name }}</span>
                     </div>
+
+                    <div class="cp-meal-plan-review-order-review-button"
+                            ng-if="showReviewButton(placedOrder)">
+                        <a ng-href="/customer/orders/{{placedOrder.id}}/leave-a-review">!</a>
+                    </div>
                 </li>
             </ul>
         </div>
