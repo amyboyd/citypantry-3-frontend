@@ -10,4 +10,11 @@
     </p>
 
     <cp-customer-invoice ng-if="invoice" cp-invoice-id="{{ invoice.id }}"></cp-customer-invoice>
+
+    <h2>History</h2>
+
+    <cp-history-table
+        document-id="invoice.id"
+        document-type="CityPantry\OrderBundle\Document\CustomerInvoice"
+        ></cp-history-table>
 </div>
