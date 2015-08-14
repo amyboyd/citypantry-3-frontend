@@ -1,5 +1,13 @@
 <div class="wrapper">
     <h1>Invoice {{ invoice.number }}</h1>
 
+    <p>
+        <a ng-href="/admin/order/{{ invoice.order.humanId }}">View order ({{ invoice.order.humanId }})</a>
+        <br />
+        <a ng-href="/admin/customer/{{ invoice.order.customer.id }}">View customer</a>
+        <br />
+        Head count: {{ invoice.headCount }}
+    </p>
+
     <cp-customer-invoice ng-if="invoice" cp-invoice-id="{{ invoice.id }}"></cp-customer-invoice>
 </div>
