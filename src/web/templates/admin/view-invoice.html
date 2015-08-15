@@ -9,7 +9,15 @@
         Head count: {{ invoice.headCount }}
     </p>
 
-    <cp-customer-invoice ng-if="invoice" cp-invoice-id="{{ invoice.id }}"></cp-customer-invoice>
+    <p ng-if="invoice.status">
+        Status: {{ (invoice.statusText | getInvoiceStatusText).statusText }}.
+        <a ng-click="markAsPaid()"
+            ng-if="invoice.status === 1"
+            class="cp-mark-as-paid">Mark as paid</a>
+        <a ng-click="markAsAwaitingPayment()"
+            ng-if="invoice.status === 2 && invoice.order.isPaidOnAccount"
+            class="cp-revert-to-awaiting-payment">Revert to 'awaiting payment'</a>
+    </p>
 
     <h2>History</h2>
 
@@ -17,4 +25,14 @@
         document-id="invoice.id"
         document-type="CityPantry\OrderBundle\Document\CustomerInvoice"
         ></cp-history-table>
+
+    <h2>View</h2>
+
+    <p>
+        <a ng-href="{{ invoice.pdfFileSystemUrl }}">Get PDF version</a>
+        <br />
+        <a ng-href="{{ invoice.htmlFileSystemUrl }}">Get HTML version</a>
+    </p>
+
+    <cp-customer-invoice ng-if="invoice" cp-invoice-id="{{ invoice.id }}"></cp-customer-invoice>
 </div>
