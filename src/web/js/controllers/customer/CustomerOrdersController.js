@@ -38,12 +38,12 @@ angular.module('cp.controllers.customer').controller('CustomerOrdersController',
 
                 const firstInvoice = response.invoices[response.invoices.length - 1];
 
-                if (!firstInvoice.fileSystemUrl) {
+                if (!firstInvoice.pdfFileSystemUrl) {
                     NotificationService.notifyError('The invoice for this order is not available to download.');
                     return;
                 }
 
-                $window.location = firstInvoice.fileSystemUrl;
+                $window.location = firstInvoice.pdfFileSystemUrl;
             })
             .catch(response => NotificationService.notifyError(response.data.errorTranslation));
     };
