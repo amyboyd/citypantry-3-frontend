@@ -21,6 +21,24 @@ describe('Admin - invoice page', function() {
         expect(element(by.css('h1')).getText()).toMatch(/^Invoice CP\-\d+\-\d{4}$/);
     });
 
+    it('should have a link to mark the invoice as paid, then to revert to awaiting payment', function() {
+        var markAsPaid = element(by.css('a.cp-mark-as-paid'));
+        var revertToAwaitingPayment = element(by.css('a.cp-revert-to-awaiting-payment'));
+
+        expect(markAsPaid.isDisplayed()).toBe(true);
+        expect(revertToAwaitingPayment.isPresent()).toBe(false);
+
+        markAsPaid.click();
+
+        expect(markAsPaid.isPresent()).toBe(false);
+        expect(revertToAwaitingPayment.isDisplayed()).toBe(true);
+
+        revertToAwaitingPayment.click();
+
+        expect(markAsPaid.isDisplayed()).toBe(true);
+        expect(revertToAwaitingPayment.isPresent()).toBe(false);
+    });
+
     it('should load the invoice details', function() {
         var invoice = element(by.css('.invoice')).getText();
         expect(invoice).toMatch(/Invoice No.: CP\-\d+\-\d{4}/);
