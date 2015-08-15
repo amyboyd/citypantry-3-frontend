@@ -126,6 +126,7 @@
                     <tr>
                         <th></th>
                         <th>Net</th>
+                        <th>Add VAT at 20%?</th>
                         <th>VAT</th>
                         <th>Gross</th>
                     </tr>
@@ -133,20 +134,29 @@
                 <tbody>
                     <tr>
                         <td>Hot</td>
-                        <td>{{ package.standardRatedFoodNetCost | currency:'£':2 }}</td>
-                        <td>{{ package.standardRatedFoodVatCost | currency:'£':2 }}</td>
                         <td>
                             <input class="cp-form-control"
-                                name="packageStandardRatedFoodGrossCost"
+                                name="packageStandardRatedFoodNetCost"
                                 type="number"
                                 required aria-required="true"
-                                ng-model="package.standardRatedFoodGrossCost" />
+                                ng-model="package.standardRatedFoodNetCost" />
+                        </td>
+                        <td>
+                            <input class="cp-cost-has-vat"
+                                name="packageStandardRatedFoodHasVat"
+                                type="checkbox"
+                                ng-model="package.standardRatedFoodHasVat" />
+                        </td>
+                        <td>
+                            {{ package.standardRatedFoodVatCost | currency:'£' }}
+                        </td>
+                        <td>
+                            {{ package.standardRatedFoodGrossCost | currency:'£':2 }}
                         </td>
                     </tr>
+
                     <tr>
                         <td>Cold</td>
-                        <td>{{ package.zeroRatedFoodNetCost | currency:'£':2 }}</td>
-                        <td>{{ 0 | currency:'£':2 }}</td>
                         <td>
                             <input class="cp-form-control"
                                 name="packageZeroRatedFoodNetCost"
@@ -154,14 +164,30 @@
                                 required aria-required="true"
                                 ng-model="package.zeroRatedFoodNetCost" />
                         </td>
+                        <td>
+                            <input class="cp-cost-has-vat"
+                                name="packageZeroRatedFoodHasVat"
+                                type="checkbox"
+                                ng-model="package.zeroRatedFoodHasVat" />
+                        </td>
+                        <td>
+                            {{ package.zeroRatedFoodVatCost | currency:'£' }}
+                        </td>
+                        <td>
+                            {{ package.zeroRatedFoodGrossCost | currency:'£':2 }}
+                        </td>
                     </tr>
+
                     <tr>
                         <td>Total</td>
                         <td>{{ package.totalFoodNetCost | currency:'£':2 }}</td>
+                        <td></td>
                         <td>{{ package.totalFoodVatCost | currency:'£':2 }}</td>
                         <td>{{ package.totalFoodGrossCost | currency:'£':2 }}</td>
                     </tr>
                 </tbody>
+
+                <p>City Pantry will act as your agent in preparing and issuing VAT invoices to customers for transactions placed through the website. You are responsible for providing accurate information for the preparation of invoices.</p>
             </table>
         </div>
 

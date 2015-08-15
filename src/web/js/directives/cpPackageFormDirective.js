@@ -33,30 +33,35 @@ angular.module('cp').controller('cpPackageFormController', function($scope, $loc
     $scope.packagingTypeOptions = PackagesFactory.getPackagingTypeOptions();
     $scope.vendor = {};
 
-    function round(number) {
-        return Number(number.toFixed(2));
-    }
+    const round = (amount) => Number(amount.toFixed(2));
+    const getVatFromNetIfHasVat = (hasVat, net) => hasVat ? round(net / 5) : 0;
 
     function recalculateFoodCosts() {
-        $scope.package.standardRatedFoodNetCost = round(Number($scope.package.standardRatedFoodGrossCost) / 1.2);
-        $scope.package.standardRatedFoodVatCost = round(Number($scope.package.standardRatedFoodGrossCost) - $scope.package.standardRatedFoodNetCost);
+        $scope.package.standardRatedFoodVatCost = getVatFromNetIfHasVat($scope.package.standardRatedFoodHasVat, $scope.package.standardRatedFoodNetCost);
+        $scope.package.standardRatedFoodGrossCost = round($scope.package.standardRatedFoodNetCost + $scope.package.standardRatedFoodVatCost);
 
-        $scope.package.totalFoodVatCost = $scope.package.standardRatedFoodVatCost;
-        $scope.package.totalFoodNetCost = round($scope.package.standardRatedFoodNetCost + Number($scope.package.zeroRatedFoodNetCost));
-        $scope.package.totalFoodGrossCost = round($scope.package.totalFoodNetCost + $scope.package.totalFoodVatCost);
+        $scope.package.zeroRatedFoodVatCost = getVatFromNetIfHasVat($scope.package.zeroRatedFoodHasVat, $scope.package.zeroRatedFoodNetCost);
+        $scope.package.zeroRatedFoodGrossCost = round($scope.package.zeroRatedFoodNetCost + $scope.package.zeroRatedFoodVatCost);
+
+        $scope.package.totalFoodNetCost = round($scope.package.standardRatedFoodNetCost + $scope.package.zeroRatedFoodNetCost);
+        $scope.package.totalFoodVatCost = round($scope.package.standardRatedFoodVatCost + $scope.package.zeroRatedFoodVatCost);
+        $scope.package.totalFoodGrossCost = round($scope.package.standardRatedFoodGrossCost + $scope.package.zeroRatedFoodGrossCost);
     }
 
     function initializeFoodCosts() {
-        if ($scope.package.totalGrossFoodCost > 0 &&
-                $scope.package.zeroRatedFoodNetCost > 0 &&
-                !angular.isDefined($scope.package.standardRatedFoodGrossCost)) {
-            $scope.package.standardRatedFoodGrossCost = round($scope.package.totalGrossFoodCost - $scope.package.zeroRatedFoodNetCost);
+        if (!$scope.package.standardRatedFoodNetCost) {
+            $scope.package.standardRatedFoodNetCost = 0;
+        }
+        if (!$scope.package.zeroRatedFoodNetCost) {
+            $scope.package.zeroRatedFoodNetCost = 0;
         }
 
         recalculateFoodCosts();
 
-        $scope.$watch('package.standardRatedFoodGrossCost', recalculateFoodCosts);
+        $scope.$watch('package.standardRatedFoodNetCost', recalculateFoodCosts);
         $scope.$watch('package.zeroRatedFoodNetCost', recalculateFoodCosts);
+        $scope.$watch('package.standardRatedFoodHasVat', recalculateFoodCosts);
+        $scope.$watch('package.zeroRatedFoodHasVat', recalculateFoodCosts);
     }
 
     initializeFoodCosts();
