@@ -36,6 +36,7 @@ angular.module('cp.controllers.admin').controller('AdminEditPackagesController',
         const updatedPackage = {
             name: pkg.name,
             isMealPlan: pkg.isMealPlan,
+            isMayfairTrial: pkg.isMayfairTrial,
             packagingType: pkg.packagingType,
             canDeliverCutleryAndServiettes: pkg.canDeliverCutleryAndServiettes,
             notice: pkg.notice,

@@ -30,6 +30,7 @@ angular.module('cp.controllers.admin').controller('AdminEditPackageController',
             shortDescription: $scope.vendorPackage.shortDescription,
             description: $scope.vendorPackage.description,
             isMealPlan: $scope.vendorPackage.isMealPlan,
+            isMayfairTrial: $scope.vendorPackage.isMayfairTrial,
             notice: $scope.vendorPackage.notice,
             packagingType: $scope.vendorPackage.packagingType
         };

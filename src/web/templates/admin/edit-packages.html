@@ -13,6 +13,7 @@
                 <th>Cuisine type</th>
                 <th>Event types</th>
                 <th>Hot food?</th>
+                <th>Is Mayfair trial?</th>
                 <th>Save</th>
             </tr>
         </thead>
@@ -55,6 +56,11 @@
                 <td>
                     <input type="checkbox"
                         ng-model="package.hotFood"
+                        ng-change="package.hasChanged = true" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="package.isMayfairTrial"
                         ng-change="package.hasChanged = true" />
                 </td>
                 <td>
