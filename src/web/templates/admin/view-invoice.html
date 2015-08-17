@@ -34,9 +34,17 @@
     <h2>View</h2>
 
     <p>
-        <a ng-href="{{ invoice.pdfFileSystemUrl }}">Get PDF version</a>
+        <!--
+        Old invoices don't always have the file system URLs set, so only show the links if they
+        are set.
+        -->
+        <a ng-if="invoice.pdfFileSystemUrl"
+            ng-href="{{ invoice.pdfFileSystemUrl }}"
+            >Get PDF version</a>
         <br />
-        <a ng-href="{{ invoice.htmlFileSystemUrl }}">Get HTML version</a>
+        <a ng-if="invoice.htmlFileSystemUrl"
+            ng-href="{{ invoice.htmlFileSystemUrl }}"
+            >Get HTML version</a>
     </p>
 
     <cp-customer-invoice ng-if="invoice" cp-invoice-id="{{ invoice.id }}"></cp-customer-invoice>
