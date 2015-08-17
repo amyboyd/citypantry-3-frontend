@@ -1,4 +1,5 @@
 var gridTestUtils = require('../lib/gridTestUtils.spec.js');
+var notificationModal = require('../NotificationModal.js');
 
 describe('Admin - invoice page', function() {
     var isFirst = true;
@@ -51,5 +52,17 @@ describe('Admin - invoice page', function() {
         expect(invoice).toContain('VAT £0.00');
         expect(invoice).toContain('Grand Total £127.50');
         expect(invoice).toContain('Paid on account. Payment is due 10 days from the invoice date.');
+    });
+
+    it('should be able to re-issue the invoice', function() {
+        browser.getCurrentUrl().then(function(originalUrl) {
+            element(by.css('a.cp-reissue-invoice')).click();
+
+            // If successful, the user should be redirected to the new invoice. There is no
+            // notification modal unless an error occurred.
+            expect(browser.getCurrentUrl()).not.toEqual(originalUrl);
+
+            notificationModal.expectIsClosed();
+        });
     });
 });

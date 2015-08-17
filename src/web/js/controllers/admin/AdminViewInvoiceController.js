@@ -1,10 +1,13 @@
 angular.module('cp.controllers.admin').controller('AdminViewInvoiceController',
         function($scope, $routeParams, OrdersFactory, NotificationService, DocumentTitleService,
-        SecurityService, LoadingService, INVOICE_STATUS_AWAITING_PAYMENT, INVOICE_STATUS_PAID) {
+        SecurityService, LoadingService, INVOICE_STATUS_AWAITING_PAYMENT, INVOICE_STATUS_PAID,
+        $location) {
     DocumentTitleService('View invoice');
     SecurityService.requireStaff();
 
-    OrdersFactory.getCustomerInvoice($routeParams.invoiceId)
+    const id = $routeParams.invoiceId;
+
+    OrdersFactory.getCustomerInvoice(id)
         .success(invoice => {
             $scope.invoice = invoice;
             LoadingService.hide();
@@ -14,7 +17,7 @@ angular.module('cp.controllers.admin').controller('AdminViewInvoiceController',
     function updateStatus(status) {
         LoadingService.show();
 
-        OrdersFactory.updateCustomerInvoiceStatus($scope.invoice.id, status)
+        OrdersFactory.updateCustomerInvoiceStatus(id, status)
             .success(response => {
                 $scope.invoice = response.invoice;
                 LoadingService.hide();
@@ -28,5 +31,14 @@ angular.module('cp.controllers.admin').controller('AdminViewInvoiceController',
 
     $scope.markAsAwaitingPayment = function() {
         updateStatus(INVOICE_STATUS_AWAITING_PAYMENT);
+    };
+
+    $scope.reissue = function() {
+        OrdersFactory.reissueCustomerInvoice(id)
+            .success(response => {
+                const newId = response.newInvoice.id;
+                $location.url(`/admin/invoice/${newId}`);
+            })
+            .error(response => NotificationService.notifyError(response.errorTranslation));
     };
 });
