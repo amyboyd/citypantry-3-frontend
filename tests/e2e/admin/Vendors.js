@@ -1,5 +1,6 @@
 describe('Admin - vendors page', function() {
     var GridObjectTest = require('../lib/gridObjectTestUtils.spec.js');
+    var notificationModal = require('../NotificationModal.js');
     var isFirst = true;
     var gridObject;
 
@@ -40,5 +41,15 @@ describe('Admin - vendors page', function() {
     it('should find 6 vendors when filter is cancelled', function() {
         gridObject.cancelFilterInColumn(3);
         gridObject.expectRowCount(6);
+    });
+
+    it('should be able to download vendors as a CSV', function() {
+        var downloadButton = element(by.css('button.cp-download-csv'));
+        expect(downloadButton.getText()).toBe('DOWNLOAD');
+        downloadButton.click();
+
+        // If there was an error, a notification modal would display. If there was not an error,
+        // the download will have happened.
+        notificationModal.expectIsClosed();
     });
 });

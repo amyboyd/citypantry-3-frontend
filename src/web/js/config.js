@@ -226,7 +226,6 @@ angular.module('cp').config(function($routeProvider, getTemplateUrl) {
         }).
         when('/admin/vendors', {
             controller: 'AdminVendorsController',
-            controllerAs: 'vendors',
             templateUrl: getTemplateUrl('admin/vendors.html')
         }).
         when('/admin/vendors/edit', {

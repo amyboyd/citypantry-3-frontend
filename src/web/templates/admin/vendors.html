@@ -1,5 +1,22 @@
 <div class="wide-wrapper">
     <h1>Vendors</h1>
 
-    <div ui-grid="vendors.gridOptions" ui-grid-pagination id="vendors-table"></div>
+    <div ui-grid="gridOptions" ui-grid-pagination id="vendors-table"></div>
+
+    <h2>Download CSV</h2>
+
+    <p>This will create a CSV of the filtered vendors.</p>
+
+    <p>Select the fields you want to include:</p>
+
+    <p ng-repeat="field in csvFields">
+        <label for="cp-csv-field-{{ field.field }}">{{ field.label }}</label>
+        <input type="checkbox"
+            id="cp-csv-field-{{ field.field }}"
+            ng-model="field.isEnabled" />
+    </p>
+
+    <p>
+        <button ng-click="createVendorsCsv()" class="btn btn-primary cp-download-csv">Download</button>
+    </p>
 </div>
